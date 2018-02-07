@@ -121,7 +121,12 @@ const RelatedItemsList = React.createClass({
 			return <div className="Relationship">{this.state.err}</div>;
 		}
 
-		const listHref = `${Keystone.adminPath}/${this.props.refList.path}`;
+		// TODO: Savvy Stack
+		// Add parent Id as filter to relationship Url, so that it will only display child items
+		// http://localhost:3000/admin/product-conferences?filters=[{"path":"reference","inverted":false,"value":["5a74d276e1cc54757bb0465c"]}]
+		const listHref = `${Keystone.adminPath}/${this.props.refList.path}?filters=[{"path":"${this.props.relationship.refPath}","inverted":false,"value":["${this.props.relatedItemId}"]}]`;
+		// const listHref = `${Keystone.adminPath}/${this.props.refList.path}?filters={"${this.props.relationship.refPath}":{"inverted":false,"value":["${this.props.relatedItemId}"]}}`;
+		// const listHref = `${Keystone.adminPath}/${this.props.refList.path}`;
 		const loadingElement = (
 			<Center height={100}>
 				<Spinner />
