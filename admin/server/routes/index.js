@@ -24,6 +24,37 @@ module.exports = function IndexRoute (req, res) {
 		backUrl = '/';
 	}
 
+	// TODO: Savvy Stack
+	// Modify keystone.nav based on user's role
+	// Hardcodded for now: organizers can only see conferences and talks
+	let userNav = keystone.nav,
+		userOrphanedLists = orphanedLists;
+	if (req.user.isOrganizer) {
+		userNav = {
+			sections: _.reduce(keystone.nav.sections, (sections, section) => {
+				if (section.key == 'conferences' || section.key == 'conference talks') {
+					sections.push(section);
+				}
+				return sections;
+			}, []),
+			by: {
+				list: {
+					Conference: keystone.nav.by.list.Conference,
+					ConferenceType: keystone.nav.by.list.ConferenceType,
+					ProductConference: keystone.nav.by.list.ProductConference,
+					Talk: keystone.nav.by.list.Talk,
+					TalkTopic: keystone.nav.by.list.TalkTopic,
+					TalkTopicCategory: keystone.nav.by.list.TalkTopicCategory,
+				},
+				section: {
+					conferences: keystone.nav.by.section.conferences,
+					'conference talks': keystone.nav.by.section['conference talks'],
+				},
+			}
+		};
+		userOrphanedLists = [];
+	}
+	
 	var keystoneData = {
 		adminPath: '/' + keystone.get('admin path'),
 		appversion: keystone.get('appversion'),
@@ -32,8 +63,11 @@ module.exports = function IndexRoute (req, res) {
 		csrf: { header: {} },
 		devMode: !!process.env.KEYSTONE_DEV,
 		lists: lists,
-		nav: keystone.nav,
-		orphanedLists: orphanedLists,
+		// TODO: Savvy Stack
+		nav: userNav,
+		orphanedLists: userOrphanedLists,
+		// nav: keystone.nav,
+		// orphanedLists: orphanedLists,
 		signoutUrl: keystone.get('signout url'),
 		user: {
 			id: req.user.id,
