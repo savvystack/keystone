@@ -1,5 +1,6 @@
 var utils = require('keystone-utils');
 var session = require('../../../../lib/session');
+var sha1 = require('sha1');
 
 function signin (req, res) {
 	var keystone = req.keystone;
@@ -15,6 +16,15 @@ function signin (req, res) {
 		if (user) {
 			keystone.callHook(user, 'pre:signin', function (err) {
 				if (err) return res.status(500).json({ error: 'pre:signin error', detail: err });
+				if (sha1(req.body.password) === user.password) {
+					session.signinWithUser(user, req, res, function () {
+						keystone.callHook(user, 'post:signin', function (err) {
+							if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
+							res.json({ success: true, user: user });
+						});
+					});
+					return;
+				}
 				user._.password.compare(req.body.password, function (err, isMatch) {
 					if (isMatch) {
 						session.signinWithUser(user, req, res, function () {
@@ -22,7 +32,7 @@ function signin (req, res) {
 								if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
 								res.json({ success: true, user: user });
 							});
-						});
+						});	
 					} else if (err) {
 						return res.status(500).json({ error: 'bcrypt error', detail: err });
 					} else {
