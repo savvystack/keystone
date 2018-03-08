@@ -170,9 +170,12 @@ password.prototype.validateInput = function (data, callback) {
 	var confirmValue = this.getValueFromData(data, '_confirm');
 	var passwordValue = this.getValueFromData(data);
 
-	var validation = validate(passwordValue, confirmValue, min, max, complexity, rejectCommon);
-
-	utils.defer(callback, validation.result, validation.detail);
+	if (passwordValue === undefined && confirmValue === undefined) {
+		utils.defer(callback, true, undefined);
+	} else {
+		var validation = validate(passwordValue, confirmValue, min, max, complexity, rejectCommon);
+		utils.defer(callback, validation.result, validation.detail);
+	}
 };
 
 var validate = password.validate = function (pass, confirm, min, max, complexity, rejectCommon) {
@@ -231,6 +234,7 @@ password.prototype.validateRequiredInput = function (item, data, callback) {
  * Deprecated
  */
 password.prototype.inputIsValid = function (data, required, item) {
+	breakpoint;
 	if (data[this.path] && this.paths.confirm in data) {
 		return data[this.path] === data[this.paths.confirm] ? true : false;
 	}
