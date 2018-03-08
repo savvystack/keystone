@@ -234,7 +234,6 @@ password.prototype.validateRequiredInput = function (item, data, callback) {
  * Deprecated
  */
 password.prototype.inputIsValid = function (data, required, item) {
-	breakpoint;
 	if (data[this.path] && this.paths.confirm in data) {
 		return data[this.path] === data[this.paths.confirm] ? true : false;
 	}
