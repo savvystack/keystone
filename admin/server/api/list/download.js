@@ -33,6 +33,8 @@ module.exports = function (req, res) {
 	}
 	var sort = req.list.expandSort(req.query.sort);
 	query.sort(sort.string);
+	// Savvy Stack: Add request object into query object, so that pre/post:find hooks can modify the query based on particular request
+	query._req = req;
 	query.exec(function (err, results) {
 		var data;
 		var fields = [];

@@ -24,7 +24,7 @@ module.exports = function IndexRoute (req, res) {
 		backUrl = '/';
 	}
 
-	// TODO: Savvy Stack
+	// Savvy Stack
 	// Modify keystone.nav based on user's role
 	// Hardcodded for now: organizers can only see conferences and talks
 	let userNav = keystone.nav,
@@ -63,7 +63,7 @@ module.exports = function IndexRoute (req, res) {
 		csrf: { header: {} },
 		devMode: !!process.env.KEYSTONE_DEV,
 		lists: lists,
-		// TODO: Savvy Stack
+		// Savvy Stack
 		nav: userNav,
 		orphanedLists: userOrphanedLists,
 		// nav: keystone.nav,
