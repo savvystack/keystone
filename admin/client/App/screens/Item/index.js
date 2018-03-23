@@ -132,6 +132,14 @@ var ItemView = React.createClass({
 						</Alert>
 					</Container>
 				);
+			} else {
+				return (
+					<Container>
+						<Alert color="danger" style={{ marginTop: '2em' }}>
+							{error.message}
+						</Alert>
+					</Container>
+				);
 			}
 		}
 		return (

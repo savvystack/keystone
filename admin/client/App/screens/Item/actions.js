@@ -137,7 +137,8 @@ export function deleteItem (id, router) {
 			}
 			// TODO Proper error handling
 			if (err) {
-				alert('Error deleting item, please try again!');
+				// Savvy Stack: display error message from server
+				alert(err.error || err.message || 'Error deleting item, please try again!');
 			} else {
 				dispatch(loadItems());
 			}
