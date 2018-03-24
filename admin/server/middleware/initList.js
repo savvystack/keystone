@@ -34,11 +34,18 @@ module.exports = function initList (req, res, next) {
 
 // Savvy Stack: parse parameters on URL
 const parseRequest = (req) => {
+	let ids = req.params.id && req.params.id.length > 0 ? req.params.id :
+		req.body.id && req.body.id.length > 0 ? req.body.id :
+		req.body.ids && req.body.ids.length > 0 ? req.body.ids : null;
+	if (ids && !req.keystone.utils.isArray(ids)) {
+		ids = [ids];
+	}
+	
 	let results = {
 		url: req.originalUrl,
 		user: req.user,
 		list: req.keystone.list(req.params.list) || null,
-		id: req.params.id || null,
+		ids: ids,
 		// format: req.params.format || null,
 		// sortOrder: req.params.sortOrder || null,
 		// newOrder: req.params.newOrder || null,
