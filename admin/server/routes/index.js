@@ -4,10 +4,43 @@ var path = require('path');
 
 var templatePath = path.resolve(__dirname, '../templates/index.html');
 
+// Savvy Stack
+// TODO: move this into list schema
+const Permission = {
+	organizer: {
+		access: ['Conference', 'ProductConference', 'ConferenceType', 'RegistrationStage', 'AttendeeType', 'Talk', 'TalkTopic', 'TalkTopicCategory'],
+		create: ['ProductConference', 'Talk'],
+		edit: ['Conference', 'ProductConference', 'Talk'],
+		delete: ['ProductConference', 'Talk']
+	}
+};
+
 module.exports = function IndexRoute (req, res) {
 	var keystone = req.keystone;
 	var lists = {};
+	var organizer = req.user && req.user.isOrganizer;
 	_.forEach(keystone.lists, function (list, key) {
+		// Savvy Stack
+		// Backup original permissions
+		if (list.options._hidden !== true && list.options._hidden !== false) {
+			list.options._hidden = list.options.hidden === true;
+			list.options._nocreate = list.options.nocreate === true;
+			list.options._noedit = list.options.noedit === true;
+			list.options._nodelete = list.options.nodelete === true;
+		}
+		// Set accessiblity for lists
+		if (organizer) {
+			list.options.hidden = Permission.organizer.access.indexOf(key) < 0;
+			list.options.nocreate = list.options.hidden || Permission.organizer.create.indexOf(key) < 0;
+			list.options.noedit = list.options.hidden || Permission.organizer.edit.indexOf(key) < 0;
+			list.options.nodelete = list.options.hidden || Permission.organizer.delete.indexOf(key) < 0;
+		} else {
+			list.options.hidden = list.options._hidden;
+			list.options.nocreate = list.options._nocreate;
+			list.options.noedit = list.options._noedit;
+			list.options.nodelete = list.options._nodelete;
+		}
+
 		lists[key] = list.getOptions();
 	});
 
@@ -29,7 +62,7 @@ module.exports = function IndexRoute (req, res) {
 	// Hardcodded for now: organizers can only see conferences and talks
 	let userNav = keystone.nav,
 		userOrphanedLists = orphanedLists;
-	if (req.user.isOrganizer) {
+	if (organizer) {
 		userNav = {
 			sections: _.reduce(keystone.nav.sections, (sections, section) => {
 				if (section.key == 'conferences' || section.key == 'conference talks') {
