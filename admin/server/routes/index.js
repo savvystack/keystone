@@ -8,10 +8,13 @@ var templatePath = path.resolve(__dirname, '../templates/index.html');
 // TODO: move this into list schema
 const Permission = {
 	organizer: {
-		access: ['Conference', 'ProductConference', 'ConferenceType', 'RegistrationStage', 'AttendeeType', 'Talk', 'TalkTopic', 'TalkTopicCategory'],
+		// Permissions for actions
+		access: ['AttendeeType', 'Conference', 'ConferenceType', 'OrderItemConference', 'ProductConference', 'RegistrationStage', 'Talk', 'TalkTopic', 'TalkTopicCategory'],
 		create: ['ProductConference', 'Talk'],
 		edit: ['Conference', 'ProductConference', 'Talk'],
-		delete: ['ProductConference', 'Talk']
+		delete: ['ProductConference', 'Talk'],
+		// Permissions for sections on Amdin UI home page
+		sections: ['conferences', 'conference talks', 'orders']
 	}
 };
 
@@ -65,24 +68,42 @@ module.exports = function IndexRoute (req, res) {
 	if (organizer) {
 		userNav = {
 			sections: _.reduce(keystone.nav.sections, (sections, section) => {
-				if (section.key == 'conferences' || section.key == 'conference talks') {
+				if (Permission.organizer.sections.indexOf(section.key) >= 0) {
+					section.lists = _.reduce(section.lists, (lists, list) => {
+						if (Permission.organizer.access.indexOf(list.key) >= 0) {
+							lists.push(list);
+						}
+						return lists;
+					}, []),
 					sections.push(section);
 				}
 				return sections;
 			}, []),
 			by: {
-				list: {
-					Conference: keystone.nav.by.list.Conference,
-					ConferenceType: keystone.nav.by.list.ConferenceType,
-					ProductConference: keystone.nav.by.list.ProductConference,
-					Talk: keystone.nav.by.list.Talk,
-					TalkTopic: keystone.nav.by.list.TalkTopic,
-					TalkTopicCategory: keystone.nav.by.list.TalkTopicCategory,
-				},
-				section: {
-					conferences: keystone.nav.by.section.conferences,
-					'conference talks': keystone.nav.by.section['conference talks'],
-				},
+				list: _.reduce(keystone.nav.by.list, (listMap, listOptions, key) => {
+					if (Permission.organizer.access.indexOf(key) >= 0) {
+						listOptions.lists = _.reduce(listOptions.lists, (lists, list) => {
+							if (Permission.organizer.access.indexOf(list.key) >= 0) {
+								lists.push(list);
+							}
+							return lists;
+						}, []),
+						listMap[key] = listOptions;
+					}
+					return listMap;
+				}, {}),
+				section: _.reduce(keystone.nav.by.section, (sections, section, key) => {
+					if (Permission.organizer.sections.indexOf(key) >= 0) {
+						section.lists = _.reduce(section.lists, (lists, list) => {
+							if (Permission.organizer.access.indexOf(list.key) >= 0) {
+								lists.push(list);
+							}
+							return lists;
+						}, []),
+						sections[key] = section;
+					}
+					return sections;
+				}, {}),
 			}
 		};
 		userOrphanedLists = [];
