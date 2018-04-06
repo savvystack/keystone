@@ -90,7 +90,7 @@ module.exports = Field.create({
 	},
 
 	formatValue () {
-		const { value = {} } = this.props;
+		const { value = {}, ops } = this.props;
 		return _.compact([
 			value.number,
 			value.name,
@@ -99,7 +99,7 @@ module.exports = Field.create({
 			value.suburb,
 			value.state,
 			value.postcode,
-			value.country,
+			ops.find(opt => opt.value === value.country) || null,
 		]).join(', ');
 	},
 
@@ -152,7 +152,7 @@ module.exports = Field.create({
 	},
 
 	renderPostcodeCountry () {
-		const { value = {}, path } = this.props;
+		const { value = {}, path, ops } = this.props;
 		return (
 			<NestedFormField label="Postcode / Country" data-field-location-path={path + '.postcode_country'}>
 				<Grid.Row gutter={10}>
@@ -165,12 +165,24 @@ module.exports = Field.create({
 						/>
 					</Grid.Col>
 					<Grid.Col small="two-thirds" data-field-location-path={path + '.country'}>
-						<FormInput
+						<div>
+							{/* This input element fools Safari's autocorrect in certain situations that completely break react-select */}
+							<input type="text" style={{ position: 'absolute', width: 1, height: 1, zIndex: -1, opacity: 0 }} tabIndex="-1"/>
+							<select
+								simpleValue
+								options={ops}
+								name={this.getInputName(path + '.country')}
+								onChange={this.makeChanger('country')}
+								placeholder="Country"
+								value={value.country || ''}
+							/>
+						</div>
+						{/* <FormInput
 							name={this.getInputName(path + '.country')}
 							onChange={this.makeChanger('country')}
 							placeholder="Country"
 							value={value.country || ''}
-						/>
+						/> */}
 					</Grid.Col>
 				</Grid.Row>
 			</NestedFormField>

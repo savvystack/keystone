@@ -5,6 +5,7 @@ var keystone = require('../../../');
 var querystring = require('querystring');
 var util = require('util');
 var utils = require('keystone-utils');
+var Countries = require('./Countries').countryOptions;
 
 var RADIUS_KM = 6371;
 var RADIUS_MILES = 3959;
@@ -16,8 +17,9 @@ function location (list, path, options) {
 
 	this._underscoreMethods = ['format', 'googleLookup', 'kmFrom', 'milesFrom'];
 	this._fixedSize = 'full';
-	this._properties = ['enableMapsAPI'];
+	this._properties = ['enableMapsAPI', 'ops'];
 	this.enableMapsAPI = (options.enableImprove === true || (options.enableImprove !== false && keystone.get('google server api key'))) ? true : false;
+	this.ops = Countries;
 
 	// Throw on invalid options in 4.0 (remove for 5.0)
 	if ('geocodeGoogle' in options) {
@@ -67,6 +69,8 @@ location.prototype.addToSchema = function (schema) {
 		state: this.path + '.state',
 		postcode: this.path + '.postcode',
 		country: this.path + '.country',
+		country_name: this.path + '.country_name',
+		// country_options: this.path + '.country_options',
 		geo: this.path + '.geo',
 		geo_lat: this.path + '.geo_lat',
 		geo_lng: this.path + '.geo_lng',
@@ -94,6 +98,7 @@ location.prototype.addToSchema = function (schema) {
 		state: getFieldDef(String, 'state'),
 		postcode: getFieldDef(String, 'postcode'),
 		country: getFieldDef(String, 'country'),
+		country_name: getFieldDef(String, 'country_name'),
 		geo: { type: [Number], index: '2dsphere' },
 	}, this.path + '.');
 
@@ -106,9 +111,14 @@ location.prototype.addToSchema = function (schema) {
 			this.get(paths.suburb),
 			this.get(paths.state),
 			this.get(paths.postcode),
+			this.get(paths.country_name),
 			this.get(paths.country),
 		]).join(', ');
 	});
+
+	// schema.virtual(paths.country_options).get(function () {
+	// 	return field.ops;
+	// });
 
 	// pre-save hook to fix blank geo fields
 	// see http://stackoverflow.com/questions/16388836/does-applying-a-2dsphere-index-on-a-mongoose-schema-force-the-location-field-to
@@ -131,6 +141,7 @@ var FILTER_PATH_MAP = {
 	state: 'state',
 	code: 'postcode',
 	country: 'country',
+	country_name: 'country_name',
 };
 location.prototype.addFilterToQuery = function (filter) {
 	var query = {};
@@ -175,6 +186,7 @@ location.prototype.isModified = function (item) {
 	|| item.isModified(this.paths.state)
 	|| item.isModified(this.paths.postcode)
 	|| item.isModified(this.paths.country)
+	|| item.isModified(this.paths.country_name)
 	|| item.isModified(this.paths.geo);
 };
 
@@ -193,6 +205,7 @@ location.prototype.getInputFromData = function (data) {
 			state: data[this.paths.state],
 			postcode: data[this.paths.postcode],
 			country: data[this.paths.country],
+			country_name: data[this.paths.country_name],
 			geo: data[this.paths.geo],
 			geo_lat: data[this.paths.geo],
 			geo_lng: data[this.paths.geo],
@@ -445,7 +458,8 @@ location.prototype.googleLookup = function (item, region, update, callback) {
 				location.state = val.short_name;
 			}
 			if (_.indexOf(val.types, 'country') >= 0) {
-				location.country = val.long_name;
+				location.country = val.short_name;
+				location.country_name = val.long_name;
 			}
 			if (_.indexOf(val.types, 'postal_code') >= 0) {
 				location.postcode = val.short_name;
