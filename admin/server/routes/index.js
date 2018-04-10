@@ -14,7 +14,7 @@ const Permission = {
 		edit: ['Conference', 'ProductConference', 'Talk'],
 		delete: ['ProductConference', 'Talk'],
 		// Permissions for sections on Amdin UI home page
-		sections: ['conferences', 'conference talks', 'orders']
+		sections: ['conferences', 'conference talks']
 	}
 };
 
