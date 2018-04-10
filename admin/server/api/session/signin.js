@@ -16,6 +16,9 @@ function signin (req, res) {
 		if (user) {
 			keystone.callHook(user, 'pre:signin', function (err) {
 				if (err) return res.status(500).json({ error: 'pre:signin error', detail: err });
+				if (!user.active) {
+					return res.status(401).json({ error: 'not an active user' });
+				}
 				if (sha1(req.body.password) === user.password) {
 					session.signinWithUser(user, req, res, function () {
 						keystone.callHook(user, 'post:signin', function (err) {
