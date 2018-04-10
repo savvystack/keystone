@@ -78,6 +78,8 @@ module.exports = function (req, res) {
 	if (relFields) {
 		query.populate(relFields.join(' '));
 	}
+	// Savvy Stack: Add request object into query object, so that pre/post:find hooks can modify the query based on particular request
+	query._req = req;
 	query.exec(function (err, results) {
 
 		if (err) return res.status(500).json(err);
