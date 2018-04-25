@@ -56,7 +56,8 @@ var DateFilter = React.createClass({
 	},
 	getDefaultProps () {
 		return {
-			format: 'DD-MM-YYYY',
+			// Savvy Stack: make date format consistent 
+			format: 'YYYY-MM-DD',//'DD-MM-YYYY',
 			filter: getDefaultValue(),
 			value: moment().startOf('day').toDate(),
 		};

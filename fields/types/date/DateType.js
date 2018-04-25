@@ -15,7 +15,8 @@ function date (list, path, options) {
 	this._fixedSize = 'medium';
 	this._properties = ['formatString', 'yearRange', 'isUTC', 'inputFormat'];
 	this.parseFormatString = options.inputFormat || 'YYYY-MM-DD';
-	this.formatString = (options.format === false) ? false : (options.format || 'Do MMM YYYY');
+	// Savvy Stack: make date format consistent 
+	this.formatString = (options.format === false) ? false : (options.format || 'YYYY-MM-DD'/*'Do MMM YYYY'*/);
 
 	this.yearRange = options.yearRange;
 	this.isUTC = options.utc || false;

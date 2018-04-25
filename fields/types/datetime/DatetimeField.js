@@ -38,7 +38,8 @@ module.exports = Field.create({
 
 	getDefaultProps () {
 		return {
-			formatString: 'Do MMM YYYY, h:mm:ss a',
+			// Savvy Stack: make date format consistent 
+			formatString: 'YYYY-MM-DD, h:mm:ss a',//'Do MMM YYYY, h:mm:ss a',
 		};
 	},
 
