@@ -17,8 +17,8 @@ module.exports = function (req, res) {
 		return res.status(401).json({ error: 'fields must be undefined, a string, or an array' });
 	}
 
-	// Savvy Stack: Add request object into query object, so that pre/post:find hooks can modify the query based on particular request
-	query._req = req;
+	// Savvy Stack: Add request states into query object, so that pre/post:find hooks can modify the query based on particular request
+    query = keystone.get('set request states')(query, req);
 	query.exec(function (err, item) {
 
 		if (err) return res.status(500).json({ err: 'database error', detail: err });
