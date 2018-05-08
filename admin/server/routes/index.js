@@ -21,7 +21,7 @@ const Permission = {
 module.exports = function IndexRoute (req, res) {
 	var keystone = req.keystone;
 	var lists = {};
-	var organizer = req.user && req.user.isOrganizer;
+	var organizer = req.user && !req.user.isAdmin && req.user.isOrganizer;
 	_.forEach(keystone.lists, function (list, key) {
 		// Savvy Stack
 		// Backup original permissions
