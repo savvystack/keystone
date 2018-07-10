@@ -51,6 +51,11 @@ module.exports = function (req, res) {
 				// add keys from all items to an array and explicitly provided
 				// the complete set to baby.unparse() below
 				Object.keys(row).forEach(function (i) {
+					// Savvy Stack: show column labels in csv
+					// This does not work! It seems that 'babyparse' lib uses items in fields as keys to fetch data object
+					// let field = req.list.fields[i],
+					// 	label = field ? field.label : i;
+					// if (fields.indexOf(label) === -1) fields.push(label);
 					if (fields.indexOf(i) === -1) fields.push(i);
 				});
 				return row;
