@@ -14,7 +14,7 @@ function signin (req, res) {
 	var emailRegExp = new RegExp('^' + utils.escapeRegExp(req.body.email) + '$', 'i');
 	User.model.findOne({ email: emailRegExp }).exec(function (err, user) {
 		if (user) {
-			keystone.callHook(user, 'pre:signin', function (err) {
+			keystone.callHook(user, 'pre:signin', req, function (err) {
 				if (err) return res.status(500).json({ error: 'pre:signin error', detail: err });
 				if (!user.active) {
 					return res.status(401).json({ error: 'not an active user' });
@@ -31,7 +31,7 @@ function signin (req, res) {
 				user._.password.compare(req.body.password, function (err, isMatch) {
 					if (isMatch) {
 						session.signinWithUser(user, req, res, function () {
-							keystone.callHook(user, 'post:signin', function (err) {
+							keystone.callHook(user, 'post:signin', req, function (err) {
 								if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
 								res.json({ success: true, user: user });
 							});

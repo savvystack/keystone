@@ -5,7 +5,7 @@ TODO: Needs Review and Spec
 var moment = require('moment');
 var assign = require('object-assign');
 
-module.exports = function (req, res) {
+module.exports = function (req, res, next) {
 	var baby = require('babyparse');
 	var keystone = req.keystone;
 
@@ -35,10 +35,10 @@ module.exports = function (req, res) {
 	query.sort(sort.string);
 	// Savvy Stack: Add request states into query object, so that pre/post:find hooks can modify the query based on particular request
     query = keystone.get('set request states')(query, req);
-	query.exec(function (err, results) {
+	query.exec()
+	.then(function (results) {
 		var data;
 		var fields = [];
-		if (err) return res.apiError('database error', err);
 		if (format === 'csv') {
 			data = results.map(function (item) {
 				var row = req.list.getCSVData(item, {
@@ -75,5 +75,6 @@ module.exports = function (req, res) {
 			});
 			res.json(data);
 		}
-	});
+	})
+	.catch(next);
 };
