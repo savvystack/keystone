@@ -1,3 +1,5 @@
+// Savvy Stack: added support for middle name
+
 import React from 'react';
 import ItemsTableCell from '../../components/ItemsTableCell';
 import ItemsTableValue from '../../components/ItemsTableValue';
@@ -13,7 +15,11 @@ var NameColumn = React.createClass({
 	renderValue () {
 		var value = this.props.data.fields[this.props.col.path];
 		if (!value || (!value.first && !value.last)) return '(no name)';
-		return displayName(value.first, value.last);
+		if (!this.props.middle || !value.middle) {
+			return displayName(value.first, value.last);
+		} else {
+			return `${value.first} ${value.middle} ${value.last}`.trim().replace(/\s+/gi, ' ');
+		}
 	},
 	render () {
 		return (

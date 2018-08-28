@@ -1,3 +1,5 @@
+// Savvy Stack: added support for middle name
+
 var _ = require('lodash');
 var FieldType = require('../Type');
 var util = require('util');
@@ -11,7 +13,12 @@ var displayName = require('display-name');
  */
 function name (list, path, options) {
 	this._fixedSize = 'full';
-	options.default = { first: '', last: '' };
+	this._properties = ['middle'];
+	this.middle = options.middle === true;
+	options.default = { first: '', last: ''};
+	if (this.middle) {
+		options.default['middle'] = '';
+	}
 	name.super_.call(this, list, path, options);
 }
 name.properName = 'Name';
@@ -20,7 +27,7 @@ util.inherits(name, FieldType);
 /**
  * Registers the field on the List's Mongoose Schema.
  *
- * Adds String properties for .first and .last name, and a virtual
+ * Adds String properties for .first, .last and .middle name, and a virtual
  * with get() and set() methods for .full
  *
  * @api public
@@ -29,6 +36,7 @@ name.prototype.addToSchema = function (schema) {
 	var paths = this.paths = {
 		first: this.path + '.first',
 		last: this.path + '.last',
+		middle: this.path + '.middle',
 		full: this.path + '.full',
 	};
 
@@ -36,13 +44,22 @@ name.prototype.addToSchema = function (schema) {
 	schema.add({
 		first: String,
 		last: String,
+		middle: String,
 	}, this.path + '.');
 
 	schema.virtual(paths.full).get(function () {
-		return displayName(this.get(paths.first), this.get(paths.last));
+		let first = this.get(paths.first),
+			last = this.get(paths.last),
+			middle = this.get(paths.middle);
+		if (!this.middle || !middle) {
+			return displayName(this.get(paths.first), this.get(paths.last));
+		} else {
+			return `${first} ${middle} ${last}`.trim().replace(/\s+/gi, ' ');
+		}
 	});
 
 	schema.virtual(paths.full).set(function (value) {
+		this.set(paths.middle, undefined);
 		if (typeof value !== 'string') {
 			this.set(paths.first, undefined);
 			this.set(paths.last, undefined);
@@ -50,7 +67,12 @@ name.prototype.addToSchema = function (schema) {
 		}
 		var split = value.split(' ');
 		this.set(paths.first, split.shift());
-		this.set(paths.last, split.join(' ') || undefined);
+		if (this.middle && split.length >= 2) {
+			this.set(paths.last, split.pop());
+			this.set(paths.middle, split.join(' '));
+		} else {
+			this.set(paths.last, split.join(' ') || undefined);
+		}
 	});
 
 	this.bindUnderscoreMethods();
@@ -61,9 +83,9 @@ name.prototype.addToSchema = function (schema) {
  */
 name.prototype.getSortString = function (options) {
 	if (options.invert) {
-		return '-' + this.paths.first + ' -' + this.paths.last;
+		return '-' + this.paths.first + ' -' + this.paths.last + (this.middle ? (' -' + this.paths.middle) : '');
 	}
-	return this.paths.first + ' ' + this.paths.last;
+	return this.paths.first + ' ' + this.paths.last + (this.middle ? (' ' + this.paths.middle) : '');
 };
 
 /**
@@ -73,6 +95,9 @@ name.prototype.addFilterToQuery = function (filter) {
 	var query = {};
 	if (filter.mode === 'exactly' && !filter.value) {
 		query[this.paths.first] = query[this.paths.last] = filter.inverted ? { $nin: ['', null] } : { $in: ['', null] };
+		if (this.middle) {
+			query[this.paths.middle] = filter.inverted ? { $nin: ['', null] } : { $in: ['', null] };
+		}
 		return query;
 	}
 	var value = utils.escapeRegExp(filter.value);
@@ -86,10 +111,17 @@ name.prototype.addFilterToQuery = function (filter) {
 	value = new RegExp(value, filter.caseSensitive ? '' : 'i');
 	if (filter.inverted) {
 		query[this.paths.first] = query[this.paths.last] = { $not: value };
+		if (this.middle) {
+			query[this.paths.middle] = { $not: value };
+		}
 	} else {
 		var first = {}; first[this.paths.first] = value;
 		var last = {}; last[this.paths.last] = value;
-		query.$or = [first, last];
+		query.$or = [first, last, middle];
+		if (this.middle) {
+			var middle = {}; middle[this.paths.middle] = value;
+			query.$or.push(middle);
+		}
 	}
 	return query;
 };
@@ -114,10 +146,13 @@ name.prototype.getInputFromData = function (data) {
 	if (first === undefined) first = this.getValueFromData(data, '.first');
 	var last = this.getValueFromData(data, '_last');
 	if (last === undefined) last = this.getValueFromData(data, '.last');
-	if (first !== undefined || last !== undefined) {
+	var middle = this.getValueFromData(data, '_middle');
+	if (middle === undefined) middle = this.getValueFromData(data, '.middle');
+	if (first !== undefined || last !== undefined || middle !== undefined) {
 		return {
 			first: first,
 			last: last,
+			middle: middle,
 		};
 	}
 	return this.getValueFromData(data) || this.getValueFromData(data, '.full');
@@ -135,7 +170,9 @@ name.prototype.validateInput = function (data, callback) {
 			typeof value.first === 'string'
 			|| value.first === null
 			|| typeof value.last === 'string'
-			|| value.last === null)
+			|| value.last === null
+			|| typeof value.middle === 'string'
+			|| value.middle === null)
 		);
 	utils.defer(callback, result);
 };
@@ -149,6 +186,7 @@ name.prototype.validateRequiredInput = function (item, data, callback) {
 	if (value === null) {
 		result = false;
 	} else {
+		// Savvy Stack: TODO: skip middle name for validation?
 		result = (
 			typeof value === 'string' && value.length
 			|| typeof value === 'object' && (
@@ -190,7 +228,7 @@ name.prototype.inputIsValid = function (data, required, item) {
  * @api public
  */
 name.prototype.isModified = function (item) {
-	return item.isModified(this.paths.first) || item.isModified(this.paths.last);
+	return item.isModified(this.paths.first) || item.isModified(this.paths.last) || (this.middle && item.isModified(this.paths.middle));
 };
 
 /**
@@ -209,6 +247,9 @@ name.prototype.updateItem = function (item, data, callback) {
 		}
 		if (typeof value.last === 'string' || value.last === null) {
 			item.set(paths.last, value.last);
+		}
+		if (this.middle && (typeof value.middle === 'string' || value.middle === null)) {
+			item.set(paths.middle, value.middle);
 		}
 	}
 	process.nextTick(callback);
