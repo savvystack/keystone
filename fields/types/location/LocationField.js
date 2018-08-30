@@ -128,13 +128,14 @@ module.exports = Field.create({
 	renderSuburbState () {
 		const { value = {}, path } = this.props;
 		return (
-			<NestedFormField label="Suburb / State" data-field-location-path={path + '.suburb_state'}>
+			// Savvy Stack: make labels/placeholders match US standard
+			<NestedFormField label="City / State" data-field-location-path={path + '.suburb_state'}>
 				<Grid.Row gutter={10}>
 					<Grid.Col small="two-thirds" data-field-location-path={path + '.suburb'}>
 						<FormInput
 							name={this.getInputName(path + '.suburb')}
 							onChange={this.makeChanger('suburb')}
-							placeholder="Suburb"
+							placeholder="City"
 							value={value.suburb || ''}
 						/>
 					</Grid.Col>
@@ -154,13 +155,14 @@ module.exports = Field.create({
 	renderPostcodeCountry () {
 		const { value = {}, path } = this.props;
 		return (
-			<NestedFormField label="Postcode / Country" data-field-location-path={path + '.postcode_country'}>
+			// Savvy Stack: make labels/placeholders match US standard
+			<NestedFormField label="ZIP Code / Country" data-field-location-path={path + '.postcode_country'}>
 				<Grid.Row gutter={10}>
 					<Grid.Col small="one-third" data-field-location-path={path + '.postcode'}>
 						<FormInput
 							name={this.getInputName(path + '.postcode')}
 							onChange={this.makeChanger('postcode')}
-							placeholder="Post Code"
+							placeholder="ZIP Code"
 							value={value.postcode || ''}
 						/>
 					</Grid.Col>
@@ -271,17 +273,29 @@ module.exports = Field.create({
 
 		const { label, path } = this.props;
 		return (
+			// Savvy Stack: simplify the address fields
+			// <div data-field-name={path} data-field-type="location">
+			// 	<FormField label={label} htmlFor={path}>
+			// 		{showMore}
+			// 	</FormField>
+			//// 	{this.renderField('number', 'PO Box / Shop', true, true)}
+			//// 	{this.renderField('name', 'Building Name', true)}
+			// 	{this.renderField('street1', 'Street Address')}
+			// 	{this.renderField('street2', 'Street Address 2', true)}
+			// 	{this.renderSuburbState()}
+			// 	{this.renderPostcodeCountry()}
+			//// 	{this.renderGeo()}
+			// 	{this.renderGoogleOptions()}
+			// 	{this.renderNote()}
+			// </div>
 			<div data-field-name={path} data-field-type="location">
 				<FormField label={label} htmlFor={path}>
 					{showMore}
 				</FormField>
-				{this.renderField('number', 'PO Box / Shop', true, true)}
-				{this.renderField('name', 'Building Name', true)}
 				{this.renderField('street1', 'Street Address')}
 				{this.renderField('street2', 'Street Address 2', true)}
 				{this.renderSuburbState()}
 				{this.renderPostcodeCountry()}
-				{this.renderGeo()}
 				{this.renderGoogleOptions()}
 				{this.renderNote()}
 			</div>
