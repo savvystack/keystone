@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import styles from './styles';
 
 const commonClasses = styles.common;
@@ -60,7 +61,7 @@ class Button extends Component {
 
 		return <Tag {...props} />;
 	}
-};
+}
 
 Button.propTypes = {
 	active: PropTypes.bool,

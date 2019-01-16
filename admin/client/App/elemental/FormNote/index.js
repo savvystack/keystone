@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 import classes from './styles';
 
@@ -21,7 +22,7 @@ function FormNote ({
 	) : (
 		<Component {...props}>{children}</Component>
 	);
-};
+}
 FormNote.propTypes = {
 	component: PropTypes.oneOfType([
 		PropTypes.func,

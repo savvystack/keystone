@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classNames from 'classnames';
 
 function ToolbarSection ({ className, left, right, ...props }) {
@@ -8,7 +9,7 @@ function ToolbarSection ({ className, left, right, ...props }) {
 	}, className);
 
 	return <div {...props} />;
-};
+}
 
 ToolbarSection.propTypes = {
 	left: PropTypes.bool,

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import vkey from 'vkey';
 
 class AltText extends Component {
@@ -48,7 +49,7 @@ class AltText extends Component {
 
 		return <Component {...props} />;
 	}
-};
+}
 
 const SUPPORTED_KEYS = [
 	'<alt>',

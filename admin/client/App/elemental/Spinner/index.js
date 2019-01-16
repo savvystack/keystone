@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 import classes from './styles';
 import ScreenReaderOnly from '../ScreenReaderOnly';
@@ -20,7 +21,7 @@ function Spinner ({ className, size, color, ...props }) {
 			<ScreenReaderOnly>Loading...</ScreenReaderOnly>
 		</div>
 	);
-};
+}
 
 Spinner.propTypes = {
 	color: PropTypes.oneOf(colors),

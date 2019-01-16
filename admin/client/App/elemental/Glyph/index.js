@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import octicons from './octicons';
 import colors from './colors';
@@ -37,7 +38,7 @@ function Glyph ({
 	};
 
 	return <Component {...props} />;
-};
+}
 
 Glyph.propTypes = {
 	color: PropTypes.oneOfType([

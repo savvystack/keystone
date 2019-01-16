@@ -1,6 +1,8 @@
 /* eslint quote-props: ["error", "as-needed"] */
 
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+
+import React from 'react';
 import Field from '../FormField';
 import Glyph from '../Glyph';
 
@@ -36,7 +38,7 @@ function GlyphField ({
 			{isRight && icon}
 		</Field>
 	);
-};
+}
 
 // For props "glyph", "glyphColor", and "glyphSize":
 // prop type validation will occur within the Glyph component, no need to

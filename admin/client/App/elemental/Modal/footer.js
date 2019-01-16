@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 import theme from '../../../theme';
 
@@ -10,7 +11,7 @@ function ModalFooter ({
 	return (
 		<div {...props} className={css(classes.footer, classes['align__' + align], className)} />
 	);
-};
+}
 
 ModalFooter.propTypes = {
 	align: PropTypes.oneOf(['center', 'left', 'right']),

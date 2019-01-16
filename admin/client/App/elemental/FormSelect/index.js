@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import classes from './styles';
 
@@ -36,17 +37,17 @@ class FormSelect extends Component {
 			</div>
 		);
 	}
-};
+}
 
 FormSelect.contextTypes = {
 	formFieldId: PropTypes.string,
 };
 FormSelect.propTypes = {
 	onChange: PropTypes.func.isRequired,
-	options: React.PropTypes.arrayOf(
-		React.PropTypes.shape({
-			label: React.PropTypes.string,
-			value: React.PropTypes.string,
+	options: PropTypes.arrayOf(
+		PropTypes.shape({
+			label: PropTypes.string,
+			value: PropTypes.string,
 		})
 	),
 	value: PropTypes.oneOfType([

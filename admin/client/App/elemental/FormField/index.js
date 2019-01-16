@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 
 import classes from './styles';
 import FormLabel from '../FormLabel';
@@ -57,7 +58,7 @@ class FormField extends Component {
 			</div>
 		);
 	}
-};
+}
 
 const stylesShape = {
 	_definition: PropTypes.object,
@@ -81,13 +82,13 @@ FormField.propTypes = {
 		PropTypes.arrayOf(PropTypes.shape(stylesShape)),
 		PropTypes.shape(stylesShape),
 	]),
-	htmlFor: React.PropTypes.string,
-	label: React.PropTypes.string,
-	offsetAbsentLabel: React.PropTypes.bool,
+	htmlFor: PropTypes.string,
+	label: PropTypes.string,
+	offsetAbsentLabel: PropTypes.bool,
 };
 
 function generateId () {
 	return Math.random().toString(36).substr(2, 9);
-};
+}
 
 module.exports = FormField;

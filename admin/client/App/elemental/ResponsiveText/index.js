@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import theme from '../../../theme';
 
 // Using window.innerWidth and state instead of CSS media breakpoints
@@ -66,7 +67,7 @@ class ResponsiveText extends Component {
 
 		return text ? <Component {...props}>{text}</Component> : null;
 	}
-};
+}
 
 ResponsiveText.propTypes = {
 	hiddenLG: PropTypes.string,

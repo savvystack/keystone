@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classes from './styles';
 
 function FormLabel ({
@@ -33,7 +34,7 @@ function FormLabel ({
 	}
 
 	return <Component {...props} />;
-};
+}
 
 const stylesShape = {
 	_definition: PropTypes.object,

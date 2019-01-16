@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { cloneElement, Children, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { cloneElement, Children } from 'react';
 import classes from './styles';
 import colors from './colors';
 
@@ -31,7 +32,7 @@ function Alert ({
 	props.children = Children.map(children, cloneWithClassnames);
 
 	return <Component {...props} data-alert-type={color} />;
-};
+}
 
 Alert.propTypes = {
 	color: PropTypes.oneOf(Object.keys(colors)).isRequired,

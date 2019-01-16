@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { cloneElement, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { cloneElement } from 'react';
 import classes from './styles';
 
 // NOTE: Inline Group Section accepts a single child
@@ -37,7 +38,7 @@ function InlineGroupSection ({
 			{children}
 		</div>
 	);
-};
+}
 
 InlineGroupSection.propTypes = {
 	active: PropTypes.bool, // buttons only

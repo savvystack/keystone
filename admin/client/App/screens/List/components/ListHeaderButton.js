@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { DropdownButton, Glyph } from '../../../elemental';
 
 function ListHeaderButton ({ className, label, glyph, ...props }) {
@@ -9,7 +10,7 @@ function ListHeaderButton ({ className, label, glyph, ...props }) {
 			<span className={css(classes.label)}>{label}</span>
 		</DropdownButton>
 	);
-};
+}
 
 ListHeaderButton.propTypes = {
 	glyph: PropTypes.string.isRequired,

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 import Button from '../Button';
 import Spinner from '../Spinner';
@@ -43,7 +44,7 @@ function LoadingButton ({ children, loading, ...props }) {
 			{children}
 		</Button>
 	);
-};
+}
 
 LoadingButton.propTypes = {
 	loading: PropTypes.bool,

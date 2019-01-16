@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import {
 	GlyphButton,
 	InlineGroup as Group,
@@ -21,7 +22,7 @@ function ButtonDivider ({ style, ...props }) {
 	};
 
 	return <div {...props} />;
-};
+}
 
 function CreateButton ({ listName, onClick, ...props }) {
 	return (
@@ -42,7 +43,7 @@ function CreateButton ({ listName, onClick, ...props }) {
 			/>
 		</GlyphButton>
 	);
-};
+}
 
 function ListHeaderToolbar ({
 	// common
@@ -129,7 +130,7 @@ function ListHeaderToolbar ({
 			</Section>
 		</Group>
 	);
-};
+}
 
 ListHeaderToolbar.propTypes = {
 	columnsActive: PropTypes.array,

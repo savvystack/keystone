@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import classes from './styles';
 import sizes from './sizes';
 
@@ -18,7 +19,7 @@ function Container ({
 	);
 
 	return <Component {...props} />;
-};
+}
 
 Container.propTypes = {
 	clearFloatingChildren: PropTypes.bool,

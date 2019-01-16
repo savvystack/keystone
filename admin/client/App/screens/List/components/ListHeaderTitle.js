@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import theme from '../../../../theme';
 
 import ListSort from './ListSort';
@@ -21,7 +22,7 @@ function ListHeaderTitle ({
 			/>
 		</h2>
 	);
-};
+}
 
 ListHeaderTitle.propTypes = {
 	activeSort: PropTypes.object,

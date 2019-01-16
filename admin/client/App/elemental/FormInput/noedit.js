@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 
 import theme from '../../../theme';
@@ -24,7 +25,7 @@ function FormInputNoedit ({
 	);
 
 	return <Component {...props} />;
-};
+}
 
 FormInputNoedit.propTypes = {
 	component: PropTypes.oneOfType([

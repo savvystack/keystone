@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import DrilldownItem from './DrilldownItem';
 
 function Drilldown ({ className, items, ...props }) {
@@ -17,7 +18,7 @@ function Drilldown ({ className, items, ...props }) {
 			))}
 		</ul>
 	);
-};
+}
 
 Drilldown.propTypes = {
 	items: PropTypes.arrayOf(

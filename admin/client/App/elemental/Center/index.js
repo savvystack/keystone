@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { css } from 'glamor';
 import classes from './styles';
 
@@ -13,7 +14,7 @@ function Center ({
 	props.style = { height, ...style };
 
 	return <Component {...props} />;
-};
+}
 Center.propTypes = {
 	component: PropTypes.oneOfType([
 		PropTypes.func,

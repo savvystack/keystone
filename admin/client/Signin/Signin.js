@@ -5,6 +5,7 @@
 import assign from 'object-assign';
 import classnames from 'classnames';
 import React from 'react';
+import createReactClass from 'create-react-class';
 import xhr from 'xhr';
 
 import Alert from './components/Alert';
@@ -12,8 +13,10 @@ import Brand from './components/Brand';
 import UserInfo from './components/UserInfo';
 import LoginForm from './components/LoginForm';
 
-var SigninView = React.createClass({
-	getInitialState () {
+var SigninView = createReactClass({
+    displayName: 'SigninView',
+
+    getInitialState () {
 		return {
 			email: '',
 			password: '',
@@ -23,19 +26,22 @@ var SigninView = React.createClass({
 			signedOut: window.location.search === '?signedout',
 		};
 	},
-	componentDidMount () {
+
+    componentDidMount () {
 		// Focus the email field when we're mounted
 		if (this.refs.email) {
 			this.refs.email.select();
 		}
 	},
-	handleInputChange (e) {
+
+    handleInputChange (e) {
 		// Set the new state when the input changes
 		const newState = {};
 		newState[e.target.name] = e.target.value;
 		this.setState(newState);
 	},
-	handleSubmit (e) {
+
+    handleSubmit (e) {
 		e.preventDefault();
 		// If either password or mail are missing, show an error
 		if (!this.state.email || !this.state.password) {
@@ -65,12 +71,13 @@ var SigninView = React.createClass({
 			}
 		});
 	},
-	/**
+
+    /**
 	 * Display an error message
 	 *
 	 * @param  {String} message The message you want to show
 	 */
-	displayError (message) {
+    displayError (message) {
 		this.setState({
 			isAnimating: true,
 			isInvalid: true,
@@ -78,8 +85,9 @@ var SigninView = React.createClass({
 		});
 		setTimeout(this.finishAnimation, 750);
 	},
-	// Finish the animation and select the email field
-	finishAnimation () {
+
+    // Finish the animation and select the email field
+    finishAnimation () {
 		// TODO isMounted was deprecated, find out if we need this guard
 		if (!this.isMounted()) return;
 		if (this.refs.email) {
@@ -89,7 +97,8 @@ var SigninView = React.createClass({
 			isAnimating: false,
 		});
 	},
-	render () {
+
+    render () {
 		const boxClassname = classnames('auth-box', {
 			'auth-box--has-errors': this.state.isAnimating,
 		});

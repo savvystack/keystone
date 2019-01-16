@@ -1,5 +1,6 @@
 import { css } from 'glamor';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router';
 import { Button, Glyph } from '../../../elemental';
 
@@ -32,7 +33,7 @@ function DrilldownItem ({ className, href, label, separate, separator, style, ..
 			)}
 		</li>
 	);
-};
+}
 
 DrilldownItem.propTypes = {
 	href: PropTypes.string.isRequired,
