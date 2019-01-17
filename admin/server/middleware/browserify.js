@@ -74,6 +74,7 @@ module.exports = function (opts) {
 		if (building) return;
 		building = true;
 		var babelify = require('babelify');
+		var babelConfig = require('../../../babel.config');
 		var browserify = require('browserify');
 		var watchify = require('watchify');
 		var opts = { basedir: basedir };
@@ -94,7 +95,7 @@ module.exports = function (opts) {
 			b = browserify(file, opts);
 		}
 
-		b.transform(babelify);
+		b.transform(babelify.configure(babelConfig));
 		b.exclude('FieldTypes');
 		packages.forEach(function (i) {
 			b.exclude(i);
