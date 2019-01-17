@@ -5,6 +5,7 @@ const less = require('less-middleware');
 const path = require('path');
 
 const packages = require('../../admin/client/packages');
+const babelConfig = require('../../babel.config');
 
 const app = new express();
 
@@ -14,7 +15,7 @@ app.get('/index.css', (req, res) => res.sendFile(path.resolve('./fields/explorer
 // Serve script bundles
 app.get('/js/explorer.js', browserify('./fields/explorer/index.js', {
 	external: packages.concat(['FieldTypes']),
-	transform: [babelify, require('brfs')],
+	transform: [babelify.configure(babelConfig), require('brfs')],
 }));
 
 
