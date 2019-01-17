@@ -6,43 +6,43 @@ var templatePath = path.resolve(__dirname, '../templates/index.html');
 
 // Savvy Stack
 // TODO: move this into list schema
-const Permission = {
-	organizer: {
-		// Permissions for actions
-		access: ['AttendeeType', 'Conference', 'ConferenceType', 'OrderItemConference', 'ProductConference', 'RegistrationStage', 'Talk', 'TalkTopic', 'TalkTopicCategory'],
-		create: ['ProductConference', 'Talk'],
-		edit: ['Conference', 'ProductConference', 'Talk'],
-		delete: ['ProductConference', 'Talk'],
-		// Permissions for sections on Amdin UI home page
-		sections: ['conferences', 'conference talks']
-	}
-};
+// const Permission = {
+// 	organizer: {
+// 		// Permissions for actions
+// 		access: ['AttendeeType', 'Conference', 'ConferenceType', 'OrderItemConference', 'ProductConference', 'RegistrationStage', 'Talk', 'TalkTopic', 'TalkTopicCategory'],
+// 		create: ['ProductConference', 'Talk'],
+// 		edit: ['Conference', 'ProductConference', 'Talk'],
+// 		delete: ['ProductConference', 'Talk'],
+// 		// Permissions for sections on Amdin UI home page
+// 		sections: ['conferences', 'conference talks']
+// 	}
+// };
 
 module.exports = function IndexRoute (req, res) {
 	var keystone = req.keystone;
 	var lists = {};
-	var organizer = req.user && !req.user.isAdmin && req.user.isOrganizer;
+	// var organizer = req.user && !req.user.isAdmin && req.user.isOrganizer;
 	_.forEach(keystone.lists, function (list, key) {
 		// Savvy Stack
 		// Backup original permissions
-		if (list.options._hidden !== true && list.options._hidden !== false) {
-			list.options._hidden = list.options.hidden === true;
-			list.options._nocreate = list.options.nocreate === true;
-			list.options._noedit = list.options.noedit === true;
-			list.options._nodelete = list.options.nodelete === true;
-		}
-		// Set accessiblity for lists
-		if (organizer) {
-			list.options.hidden = Permission.organizer.access.indexOf(key) < 0;
-			list.options.nocreate = list.options.hidden || Permission.organizer.create.indexOf(key) < 0;
-			list.options.noedit = list.options.hidden || Permission.organizer.edit.indexOf(key) < 0;
-			list.options.nodelete = list.options.hidden || Permission.organizer.delete.indexOf(key) < 0;
-		} else {
-			list.options.hidden = list.options._hidden;
-			list.options.nocreate = list.options._nocreate;
-			list.options.noedit = list.options._noedit;
-			list.options.nodelete = list.options._nodelete;
-		}
+		// if (list.options._hidden !== true && list.options._hidden !== false) {
+		// 	list.options._hidden = list.options.hidden === true;
+		// 	list.options._nocreate = list.options.nocreate === true;
+		// 	list.options._noedit = list.options.noedit === true;
+		// 	list.options._nodelete = list.options.nodelete === true;
+		// }
+		// // Set accessiblity for lists
+		// if (organizer) {
+		// 	list.options.hidden = Permission.organizer.access.indexOf(key) < 0;
+		// 	list.options.nocreate = list.options.hidden || Permission.organizer.create.indexOf(key) < 0;
+		// 	list.options.noedit = list.options.hidden || Permission.organizer.edit.indexOf(key) < 0;
+		// 	list.options.nodelete = list.options.hidden || Permission.organizer.delete.indexOf(key) < 0;
+		// } else {
+			// list.options.hidden = list.options._hidden;
+			// list.options.nocreate = list.options._nocreate;
+			// list.options.noedit = list.options._noedit;
+			// list.options.nodelete = list.options._nodelete;
+		// }
 
 		lists[key] = list.getOptions();
 	});
@@ -63,51 +63,51 @@ module.exports = function IndexRoute (req, res) {
 	// Savvy Stack
 	// Modify keystone.nav based on user's role
 	// Hardcodded for now: organizers can only see conferences and talks
-	let userNav = keystone.nav,
-		userOrphanedLists = orphanedLists;
-	if (organizer) {
-		userNav = {
-			sections: _.reduce(keystone.nav.sections, (sections, section) => {
-				if (Permission.organizer.sections.indexOf(section.key) >= 0) {
-					section.lists = _.reduce(section.lists, (lists, list) => {
-						if (Permission.organizer.access.indexOf(list.key) >= 0) {
-							lists.push(list);
-						}
-						return lists;
-					}, []),
-					sections.push(section);
-				}
-				return sections;
-			}, []),
-			by: {
-				list: _.reduce(keystone.nav.by.list, (listMap, listOptions, key) => {
-					if (Permission.organizer.access.indexOf(key) >= 0) {
-						listOptions.lists = _.reduce(listOptions.lists, (lists, list) => {
-							if (Permission.organizer.access.indexOf(list.key) >= 0) {
-								lists.push(list);
-							}
-							return lists;
-						}, []),
-						listMap[key] = listOptions;
-					}
-					return listMap;
-				}, {}),
-				section: _.reduce(keystone.nav.by.section, (sections, section, key) => {
-					if (Permission.organizer.sections.indexOf(key) >= 0) {
-						section.lists = _.reduce(section.lists, (lists, list) => {
-							if (Permission.organizer.access.indexOf(list.key) >= 0) {
-								lists.push(list);
-							}
-							return lists;
-						}, []),
-						sections[key] = section;
-					}
-					return sections;
-				}, {}),
-			}
-		};
-		userOrphanedLists = [];
-	}
+	// let userNav = keystone.nav,
+	// userOrphanedLists = orphanedLists;
+	// if (organizer) {
+	// 	userNav = {
+	// 		sections: _.reduce(keystone.nav.sections, (sections, section) => {
+	// 			if (Permission.organizer.sections.indexOf(section.key) >= 0) {
+	// 				section.lists = _.reduce(section.lists, (lists, list) => {
+	// 					if (Permission.organizer.access.indexOf(list.key) >= 0) {
+	// 						lists.push(list);
+	// 					}
+	// 					return lists;
+	// 				}, []),
+	// 				sections.push(section);
+	// 			}
+	// 			return sections;
+	// 		}, []),
+	// 		by: {
+	// 			list: _.reduce(keystone.nav.by.list, (listMap, listOptions, key) => {
+	// 				if (Permission.organizer.access.indexOf(key) >= 0) {
+	// 					listOptions.lists = _.reduce(listOptions.lists, (lists, list) => {
+	// 						if (Permission.organizer.access.indexOf(list.key) >= 0) {
+	// 							lists.push(list);
+	// 						}
+	// 						return lists;
+	// 					}, []),
+	// 					listMap[key] = listOptions;
+	// 				}
+	// 				return listMap;
+	// 			}, {}),
+	// 			section: _.reduce(keystone.nav.by.section, (sections, section, key) => {
+	// 				if (Permission.organizer.sections.indexOf(key) >= 0) {
+	// 					section.lists = _.reduce(section.lists, (lists, list) => {
+	// 						if (Permission.organizer.access.indexOf(list.key) >= 0) {
+	// 							lists.push(list);
+	// 						}
+	// 						return lists;
+	// 					}, []),
+	// 					sections[key] = section;
+	// 				}
+	// 				return sections;
+	// 			}, {}),
+	// 		}
+	// 	};
+	// 	userOrphanedLists = [];
+	// }
 	
 	var keystoneData = {
 		adminPath: '/' + keystone.get('admin path'),
@@ -118,10 +118,10 @@ module.exports = function IndexRoute (req, res) {
 		devMode: !!process.env.KEYSTONE_DEV,
 		lists: lists,
 		// Savvy Stack
-		nav: userNav,
-		orphanedLists: userOrphanedLists,
-		// nav: keystone.nav,
-		// orphanedLists: orphanedLists,
+		// nav: userNav,
+		// orphanedLists: userOrphanedLists,
+		nav: keystone.nav,
+		orphanedLists: orphanedLists,
 		signoutUrl: keystone.get('signout url'),
 		user: {
 			id: req.user.id,
