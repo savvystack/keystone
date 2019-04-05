@@ -113,7 +113,7 @@ module.exports = Field.create({
 	renderValue () {
 		return (
 			<FormInput multiline noedit>
-				{this._currentValue}
+				{this.props.value}
 			</FormInput>
 		);
 	},
