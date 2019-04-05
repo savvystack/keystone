@@ -7,6 +7,7 @@ admin/server/middleware/browserify.js
 */
 
 module.exports = [
+	'@editorjs/editorjs',
 	'glamor',
 	'async',
 	'blacklist',

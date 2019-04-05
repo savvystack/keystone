@@ -22,6 +22,7 @@
     "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@editorjs/editorjs": "^2.12.3",
     "async": "^2.5.0",
     "asyncdi": "^1.1.0",
     "babelify": "^10.0.0",
