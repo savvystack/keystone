@@ -108,7 +108,7 @@ module.exports = function IndexRoute (req, res) {
 	// 	};
 	// 	userOrphanedLists = [];
 	// }
-	
+
 	var keystoneData = {
 		adminPath: '/' + keystone.get('admin path'),
 		appversion: keystone.get('appversion'),

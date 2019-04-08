@@ -9,12 +9,14 @@ import ListHeaderButton from './ListHeaderButton';
 import { setActiveColumns } from '../actions';
 
 class ListColumnsForm extends React.Component {
-    static displayName = 'ListColumnsForm';
+    constructor(props) {
+        super(props);
 
-    state = {
-        selectedColumns: {},
-        searchString: '',
-    };
+        this.state = {
+            selectedColumns: {},
+            searchString: '',
+        };
+    }
 
     getSelectedColumnsFromStore = () => {
 		var selectedColumns = {};
@@ -126,5 +128,7 @@ class ListColumnsForm extends React.Component {
 		);
 	}
 }
+
+ListColumnsForm.displayName = 'ListColumnsForm';
 
 module.exports = ListColumnsForm;

@@ -9,19 +9,13 @@ import blacklist from 'blacklist';
 import classnames from 'classnames';
 
 class PopoutListItem extends React.Component {
-    static displayName = 'PopoutListItem';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		icon: PropTypes.string,
-		iconHover: PropTypes.string,
-		isSelected: PropTypes.bool,
-		label: PropTypes.string.isRequired,
-		onClick: PropTypes.func,
-	};
-
-    state = {
-        hover: false,
-    };
+        this.state = {
+            hover: false,
+        };
+    }
 
     hover = () => {
 		this.setState({ hover: true });
@@ -64,5 +58,15 @@ class PopoutListItem extends React.Component {
 		);
 	}
 }
+
+PopoutListItem.displayName = 'PopoutListItem';
+
+PopoutListItem.propTypes = {
+    icon: PropTypes.string,
+    iconHover: PropTypes.string,
+    isSelected: PropTypes.bool,
+    label: PropTypes.string.isRequired,
+    onClick: PropTypes.func,
+};
 
 module.exports = PopoutListItem;

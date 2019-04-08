@@ -6,17 +6,7 @@ import { Sortable } from './ItemsTableRow';
 import DropZone from './ItemsTableDragDropZone';
 
 class ItemsTableDragDrop extends React.Component {
-    static displayName = 'ItemsTableDragDrop';
-
-    static propTypes = {
-		columns: PropTypes.array,
-		id: PropTypes.any,
-		index: PropTypes.number,
-		items: PropTypes.object,
-		list: PropTypes.object,
-	};
-
-    render() {
+	render () {
 		return (
 			<tbody >
 				{this.props.items.results.map((item, i) => {
@@ -35,5 +25,15 @@ class ItemsTableDragDrop extends React.Component {
 		);
 	}
 }
+
+ItemsTableDragDrop.displayName = 'ItemsTableDragDrop';
+
+ItemsTableDragDrop.propTypes = {
+	columns: PropTypes.array,
+	id: PropTypes.any,
+	index: PropTypes.number,
+	items: PropTypes.object,
+	list: PropTypes.object,
+};
 
 module.exports = DragDropContext(HTML5Backend)(ItemsTableDragDrop);

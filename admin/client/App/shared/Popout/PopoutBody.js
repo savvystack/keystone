@@ -9,15 +9,7 @@ import blacklist from 'blacklist';
 import classnames from 'classnames';
 
 class PopoutBody extends React.Component {
-    static displayName = 'PopoutBody';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-		scrollable: PropTypes.bool,
-	};
-
-    render() {
+	render () {
 		const className = classnames('Popout__body', {
 			'Popout__scrollable-area': this.props.scrollable,
 		}, this.props.className);
@@ -28,5 +20,13 @@ class PopoutBody extends React.Component {
 		);
 	}
 }
+
+PopoutBody.displayName = 'PopoutBody';
+
+PopoutBody.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	scrollable: PropTypes.bool,
+};
 
 module.exports = PopoutBody;

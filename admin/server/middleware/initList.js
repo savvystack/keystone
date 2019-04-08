@@ -7,7 +7,7 @@
 // 	req.list = accessRequest.list;
 // 	if (!req.list) {
 // 		return reportError(req, res, 404, `Invalid list path`, `List ${req.params.list} could not be found.`);
-	
+
 // 	// Savvy Stack: admin can access everything
 // 	} else if (req.user && req.user.isAdmin) {
 // 		return next();
@@ -40,7 +40,7 @@
 // 	if (ids && !req.keystone.utils.isArray(ids)) {
 // 		ids = [ids];
 // 	}
-	
+
 // 	let results = {
 // 		url: req.originalUrl,
 // 		user: req.user,
@@ -77,7 +77,7 @@
 // 	}
 // };
 
-module.exports = function initList(req, res, next) {
+module.exports = function initList (req, res, next) {
 	var keystone = req.keystone;
 	req.list = keystone.list(req.params.list);
 	if (!req.list) {

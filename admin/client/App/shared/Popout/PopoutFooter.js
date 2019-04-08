@@ -9,17 +9,6 @@ import React from 'react';
 const BUTTON_BASE_CLASSNAME = 'Popout__footer__button Popout__footer__button--';
 
 class PopoutFooter extends React.Component {
-    static displayName = 'PopoutFooter';
-
-    static propTypes = {
-		children: PropTypes.node,
-		primaryButtonAction: PropTypes.func,
-		primaryButtonIsSubmit: PropTypes.bool,
-		primaryButtonLabel: PropTypes.string,
-		secondaryButtonAction: PropTypes.func,
-		secondaryButtonLabel: PropTypes.string,
-	};
-
     // Render a primary button
     renderPrimaryButton = () => {
 		if (!this.props.primaryButtonLabel) return null;
@@ -60,5 +49,16 @@ class PopoutFooter extends React.Component {
 		);
 	}
 }
+
+PopoutFooter.displayName = 'PopoutFooter';
+
+PopoutFooter.propTypes = {
+    children: PropTypes.node,
+    primaryButtonAction: PropTypes.func,
+    primaryButtonIsSubmit: PropTypes.bool,
+    primaryButtonLabel: PropTypes.string,
+    secondaryButtonAction: PropTypes.func,
+    secondaryButtonLabel: PropTypes.string,
+};
 
 module.exports = PopoutFooter;

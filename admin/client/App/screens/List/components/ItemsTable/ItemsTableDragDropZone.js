@@ -11,15 +11,6 @@ import DropZoneTarget from './ItemsTableDragDropZoneTarget';
 import classnames from 'classnames';
 
 class ItemsTableDragDropZone extends React.Component {
-    static displayName = 'ItemsTableDragDropZone';
-
-    static propTypes = {
-		columns: PropTypes.array,
-		connectDropTarget: PropTypes.func,
-		items: PropTypes.object,
-		list: PropTypes.object,
-	};
-
     renderPageDrops = () => {
 		const { items, currentPage, pageSize } = this.props;
 
@@ -67,5 +58,14 @@ class ItemsTableDragDropZone extends React.Component {
 		return this.renderPageDrops();
 	}
 }
+
+ItemsTableDragDropZone.displayName = 'ItemsTableDragDropZone';
+
+ItemsTableDragDropZone.propTypes = {
+    columns: PropTypes.array,
+    connectDropTarget: PropTypes.func,
+    items: PropTypes.object,
+    list: PropTypes.object,
+};
 
 module.exports = ItemsTableDragDropZone;

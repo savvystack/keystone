@@ -9,14 +9,7 @@ import blacklist from 'blacklist';
 import classnames from 'classnames';
 
 class PopoutList extends React.Component {
-    static displayName = 'PopoutList';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-	};
-
-    render() {
+	render () {
 		const className = classnames('PopoutList', this.props.className);
 		const props = blacklist(this.props, 'className');
 
@@ -25,6 +18,13 @@ class PopoutList extends React.Component {
 		);
 	}
 }
+
+PopoutList.displayName = 'PopoutList';
+
+PopoutList.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+};
 
 module.exports = PopoutList;
 

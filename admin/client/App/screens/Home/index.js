@@ -15,11 +15,13 @@ import {
 } from './actions';
 
 class HomeView extends React.Component {
-    static displayName = 'HomeView';
+    constructor(props) {
+        super(props);
 
-    state = {
-        modalIsOpen: true,
-    };
+        this.state = {
+            modalIsOpen: true,
+        };
+    }
 
     // When everything is rendered, start loading the item counts of the lists
     // from the API
@@ -90,6 +92,8 @@ class HomeView extends React.Component {
 		);
 	}
 }
+
+HomeView.displayName = 'HomeView';
 
 export {
 	HomeView,

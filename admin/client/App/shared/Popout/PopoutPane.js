@@ -9,23 +9,11 @@ import blacklist from 'blacklist';
 import classnames from 'classnames';
 
 class PopoutPane extends React.Component {
-    static displayName = 'PopoutPane';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-		onLayout: PropTypes.func,
-	};
-
-    static defaultProps = {
-        onLayout: () => {},
-    };
-
-    componentDidMount() {
+	componentDidMount () {
 		this.props.onLayout(this.refs.el.offsetHeight);
 	}
 
-    render() {
+	render () {
 		const className = classnames('Popout__pane', this.props.className);
 		const props = blacklist(this.props, 'className', 'onLayout');
 
@@ -34,5 +22,17 @@ class PopoutPane extends React.Component {
 		);
 	}
 }
+
+PopoutPane.displayName = 'PopoutPane';
+
+PopoutPane.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	onLayout: PropTypes.func,
+};
+
+PopoutPane.defaultProps = {
+	onLayout: () => {},
+};
 
 module.exports = PopoutPane;

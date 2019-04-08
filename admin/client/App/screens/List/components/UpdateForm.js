@@ -9,22 +9,13 @@ import { plural } from '../../../../utils/string';
 import { BlankState, Button, Form, Modal } from '../../../elemental';
 
 class UpdateForm extends React.Component {
-    static displayName = 'UpdateForm';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		isOpen: PropTypes.bool,
-		itemIds: PropTypes.array,
-		list: PropTypes.object,
-		onCancel: PropTypes.func,
-	};
-
-    static defaultProps = {
-        isOpen: false,
-    };
-
-    state = {
-        fields: [],
-    };
+        this.state = {
+            fields: [],
+        };
+    }
 
     componentDidMount() {
 		this.doFocus();
@@ -145,5 +136,18 @@ class UpdateForm extends React.Component {
 		);
 	}
 }
+
+UpdateForm.displayName = 'UpdateForm';
+
+UpdateForm.propTypes = {
+    isOpen: PropTypes.bool,
+    itemIds: PropTypes.array,
+    list: PropTypes.object,
+    onCancel: PropTypes.func,
+};
+
+UpdateForm.defaultProps = {
+    isOpen: false,
+};
 
 module.exports = UpdateForm;

@@ -6,9 +6,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-module.exports = class extends React.Component {
-    static displayName = 'Portal';
-    portalElement = null; // eslint-disable-line react/sort-comp
+class Portal extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.portalElement = null;
+    }
 
     componentDidMount() {
 		const el = document.createElement('div');
@@ -33,3 +36,7 @@ module.exports = class extends React.Component {
 		return null;
 	}
 };
+
+Portal.displayName = 'Portal';
+
+module.exports = Portal;

@@ -22,21 +22,6 @@ import _ from 'lodash';
 import FlashMessage from './FlashMessage';
 
 class FlashMessages extends React.Component {
-    static displayName = 'FlashMessages';
-
-    static propTypes = {
-		messages: PropTypes.oneOfType([
-			PropTypes.bool,
-			PropTypes.shape({
-				error: PropTypes.array,
-				hilight: PropTypes.array,
-				info: PropTypes.array,
-				success: PropTypes.array,
-				warning: PropTypes.array,
-			}),
-		]),
-	};
-
     // Render messages by their type
     renderMessages = (messages, type) => {
 		if (!messages || !messages.length) return null;
@@ -61,5 +46,20 @@ class FlashMessages extends React.Component {
 		);
 	}
 }
+
+FlashMessages.displayName = 'FlashMessages';
+
+FlashMessages.propTypes = {
+    messages: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.shape({
+            error: PropTypes.array,
+            hilight: PropTypes.array,
+            info: PropTypes.array,
+            success: PropTypes.array,
+            warning: PropTypes.array,
+        }),
+    ]),
+};
 
 module.exports = FlashMessages;

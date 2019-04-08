@@ -8,16 +8,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class MobileListItem extends React.Component {
-    static displayName = 'MobileListItem';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-		href: PropTypes.string.isRequired,
-		onClick: PropTypes.func,
-	};
-
-    render() {
+	render () {
 		return (
 			<Link
 				className={this.props.className}
@@ -30,5 +21,14 @@ class MobileListItem extends React.Component {
 		);
 	}
 }
+
+MobileListItem.displayName = 'MobileListItem';
+
+MobileListItem.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	href: PropTypes.string.isRequired,
+	onClick: PropTypes.func,
+};
 
 module.exports = MobileListItem;

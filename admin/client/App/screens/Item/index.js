@@ -30,15 +30,13 @@ import {
 } from '../List/actions';
 
 class ItemView extends React.Component {
-    static displayName = 'ItemView';
+    constructor(props) {
+        super(props);
 
-    static contextTypes = {
-		router: PropTypes.object.isRequired,
-	};
-
-    state = {
-        createIsOpen: false,
-    };
+        this.state = {
+            createIsOpen: false,
+        };
+    }
 
     componentDidMount() {
 		// When we directly navigate to an item without coming from another client
@@ -201,6 +199,12 @@ class ItemView extends React.Component {
 		);
 	}
 }
+
+ItemView.displayName = 'ItemView';
+
+ItemView.contextTypes = {
+    router: PropTypes.object.isRequired,
+};
 
 module.exports = connect((state) => ({
 	data: state.item.data,

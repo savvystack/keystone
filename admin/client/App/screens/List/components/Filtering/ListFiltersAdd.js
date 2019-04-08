@@ -13,22 +13,16 @@ import ListHeaderButton from '../ListHeaderButton';
 import { setFilter } from '../../actions';
 
 class ListFiltersAdd extends React.Component {
-    static displayName = 'ListFiltersAdd';
+	constructor(props) {
+		super(props);
 
-    static propTypes = {
-		maxHeight: PropTypes.number,
-	};
-
-    static defaultProps = {
-        maxHeight: 360,
-    };
-
-    state = {
-        innerHeight: 0,
-        isOpen: false,
-        searchString: '',
-        selectedField: false,
-    };
+		this.state = {
+	        innerHeight: 0,
+	        isOpen: false,
+	        searchString: '',
+	        selectedField: false,
+	    };
+	}
 
     updateSearch = (e) => {
 		this.setState({ searchString: e.target.value });
@@ -188,5 +182,15 @@ class ListFiltersAdd extends React.Component {
 		);
 	}
 }
+
+ListFiltersAdd.displayName = 'ListFiltersAdd';
+
+ListFiltersAdd.propTypes = {
+	maxHeight: PropTypes.number,
+};
+
+ListFiltersAdd.defaultProps = {
+	maxHeight: 360,
+};
 
 module.exports = ListFiltersAdd;

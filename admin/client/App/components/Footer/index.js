@@ -11,17 +11,6 @@ import { Container } from '../../elemental';
 import theme from '../../../theme';
 
 class Footer extends React.Component {
-    static displayName = 'Footer';
-
-    static propTypes = {
-		appversion: PropTypes.string,
-		backUrl: PropTypes.string,
-		brand: PropTypes.string,
-		user: PropTypes.object,
-		User: PropTypes.object, // eslint-disable-line react/sort-prop-types
-		version: PropTypes.string,
-	};
-
     // Render the user
     renderUser = () => {
 		const { User, user } = this.props;
@@ -67,6 +56,17 @@ class Footer extends React.Component {
 		);
 	}
 }
+
+Footer.displayName = 'Footer';
+
+Footer.propTypes = {
+    appversion: PropTypes.string,
+    backUrl: PropTypes.string,
+    brand: PropTypes.string,
+    user: PropTypes.object,
+    User: PropTypes.object, // eslint-disable-line react/sort-prop-types
+    version: PropTypes.string,
+};
 
 /* eslint quote-props: ["error", "as-needed"] */
 const linkHoverAndFocus = {

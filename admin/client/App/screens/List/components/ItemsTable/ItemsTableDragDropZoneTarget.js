@@ -15,23 +15,14 @@ let timeoutID = false;
 
 // drop target
 class ItemsTableDragDropZoneTarget extends React.Component {
-    static displayName = 'ItemsTableDragDropZoneTarget';
-
-    static propTypes = {
-		className: PropTypes.string,
-		connectDropTarget: PropTypes.func,
-		isOver: PropTypes.bool,
-		pageItems: PropTypes.string,
-	};
-
-    componentDidUpdate() {
+	componentDidUpdate () {
 		if (timeoutID && !this.props.isOver) {
 			clearTimeout(timeoutID);
 			timeoutID = false;
 		}
 	}
 
-    render() {
+	render () {
 		const { pageItems, page, isOver, dispatch } = this.props;
 		let { className } = this.props;
 		if (isOver) {
@@ -105,5 +96,14 @@ function dropProps (connect, monitor) {
 		isOver: monitor.isOver(),
 	};
 }
+
+ItemsTableDragDropZoneTarget.displayName = 'ItemsTableDragDropZoneTarget';
+
+ItemsTableDragDropZoneTarget.propTypes = {
+	className: PropTypes.string,
+	connectDropTarget: PropTypes.func,
+	isOver: PropTypes.bool,
+	pageItems: PropTypes.string,
+};
 
 module.exports = DropTarget('item', dropTarget, dropProps)(ItemsTableDragDropZoneTarget);

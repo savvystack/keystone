@@ -14,21 +14,6 @@ import InvalidFieldType from './InvalidFieldType';
 import { Button, Form, Modal } from '../elemental';
 
 class CreateForm extends React.Component {
-    static displayName = 'CreateForm';
-
-    static propTypes = {
-		err: PropTypes.object,
-		isOpen: PropTypes.bool,
-		list: PropTypes.object,
-		onCancel: PropTypes.func,
-		onCreate: PropTypes.func,
-	};
-
-    static defaultProps = {
-        err: null,
-        isOpen: false,
-    };
-
     constructor(props) {
         super(props);
         // Set the field values to their default values when first rendering the
@@ -201,5 +186,20 @@ class CreateForm extends React.Component {
 		);
 	}
 }
+
+CreateForm.displayName = 'CreateForm';
+
+CreateForm.propTypes = {
+    err: PropTypes.object,
+    isOpen: PropTypes.bool,
+    list: PropTypes.object,
+    onCancel: PropTypes.func,
+    onCreate: PropTypes.func,
+};
+
+CreateForm.defaultProps = {
+    err: null,
+    isOpen: false,
+};
 
 module.exports = CreateForm;

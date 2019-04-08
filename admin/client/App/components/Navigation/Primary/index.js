@@ -10,14 +10,11 @@ import { Container } from '../../../elemental';
 import PrimaryNavItem from './NavItem';
 
 class PrimaryNavigation extends React.Component {
-    static displayName = 'PrimaryNavigation';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		brand: PropTypes.string,
-		currentSectionKey: PropTypes.string,
-		sections: PropTypes.array.isRequired,
-		signoutUrl: PropTypes.string,
-	};
+        this.state = {};
+    }
 
     state = {};
 
@@ -137,5 +134,14 @@ class PrimaryNavigation extends React.Component {
 		);
 	}
 }
+
+PrimaryNavigation.displayName = 'PrimaryNavigation';
+
+PrimaryNavigation.propTypes = {
+    brand: PropTypes.string,
+    currentSectionKey: PropTypes.string,
+    sections: PropTypes.array.isRequired,
+    signoutUrl: PropTypes.string,
+};
 
 module.exports = PrimaryNavigation;

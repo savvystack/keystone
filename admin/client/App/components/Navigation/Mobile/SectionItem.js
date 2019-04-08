@@ -9,16 +9,6 @@ import MobileListItem from './ListItem';
 import { Link } from 'react-router';
 
 class MobileSectionItem extends React.Component {
-    static displayName = 'MobileSectionItem';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-		currentListKey: PropTypes.string,
-		href: PropTypes.string.isRequired,
-		lists: PropTypes.array,
-	};
-
     // Render the lists
     renderLists = () => {
 		if (!this.props.lists || this.props.lists.length <= 1) return null;
@@ -58,5 +48,15 @@ class MobileSectionItem extends React.Component {
 		);
 	}
 }
+
+MobileSectionItem.displayName = 'MobileSectionItem';
+
+MobileSectionItem.propTypes = {
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string,
+    currentListKey: PropTypes.string,
+    href: PropTypes.string.isRequired,
+    lists: PropTypes.array,
+};
 
 module.exports = MobileSectionItem;

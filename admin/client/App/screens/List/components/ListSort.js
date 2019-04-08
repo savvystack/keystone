@@ -8,17 +8,15 @@ import Popout from '../../../shared/Popout';
 import PopoutList from '../../../shared/Popout/PopoutList';
 
 class ListSort extends React.Component {
-    static displayName = 'ListSort';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		handleSortSelect: PropTypes.func.isRequired,
-	};
-
-    state = {
-        altDown: false,
-        popoutIsOpen: false,
-        searchString: '',
-    };
+        this.state = {
+            altDown: false,
+            popoutIsOpen: false,
+            searchString: '',
+        };
+    }
 
     componentDidMount() {
 		document.body.addEventListener('keydown', this.handleKeyDown, false);
@@ -145,5 +143,11 @@ class ListSort extends React.Component {
 		);
 	}
 }
+
+ListSort.displayName = 'ListSort';
+
+ListSort.propTypes = {
+    handleSortSelect: PropTypes.func.isRequired,
+};
 
 module.exports = ListSort;

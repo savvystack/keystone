@@ -8,18 +8,7 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class SecondaryNavItem extends React.Component {
-    static displayName = 'SecondaryNavItem';
-
-    static propTypes = {
-		children: PropTypes.node.isRequired,
-		className: PropTypes.string,
-		href: PropTypes.string.isRequired,
-		onClick: PropTypes.func,
-		path: PropTypes.string,
-		title: PropTypes.string,
-	};
-
-    render() {
+	render () {
 		return (
 			<li className={this.props.className} data-list-path={this.props.path}>
 				<Link
@@ -34,5 +23,16 @@ class SecondaryNavItem extends React.Component {
 		);
 	}
 }
+
+SecondaryNavItem.displayName = 'SecondaryNavItem';
+
+SecondaryNavItem.propTypes = {
+	children: PropTypes.node.isRequired,
+	className: PropTypes.string,
+	href: PropTypes.string.isRequired,
+	onClick: PropTypes.func,
+	path: PropTypes.string,
+	title: PropTypes.string,
+};
 
 module.exports = SecondaryNavItem;

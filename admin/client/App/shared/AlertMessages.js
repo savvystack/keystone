@@ -19,19 +19,6 @@ import { upcase } from '../../utils/string';
  *   to each invalid field and signin errors should promt the user to sign in.
  */
 class AlertMessages extends React.Component {
-    static displayName = 'AlertMessages';
-
-    static propTypes = {
-		alerts: PropTypes.shape({
-			error: PropTypes.Object,
-			success: PropTypes.Object,
-		}),
-	};
-
-    static defaultProps = {
-        alerts: {},
-    };
-
     renderValidationErrors = () => {
 		let errors = this.props.alerts.error.detail;
 		if (errors.name === 'ValidationError') {
@@ -96,5 +83,18 @@ class AlertMessages extends React.Component {
 		return null; // No alerts, render nothing
 	}
 }
+
+AlertMessages.displayName = 'AlertMessages';
+
+AlertMessages.propTypes = {
+    alerts: PropTypes.shape({
+        error: PropTypes.Object,
+        success: PropTypes.Object,
+    }),
+};
+
+AlertMessages.defaultProps = {
+    alerts: {},
+};
 
 module.exports = AlertMessages;

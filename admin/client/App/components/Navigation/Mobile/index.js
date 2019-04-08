@@ -12,19 +12,13 @@ import MobileSectionItem from './SectionItem';
 const ESCAPE_KEY_CODE = 27;
 
 class MobileNavigation extends React.Component {
-    static displayName = 'MobileNavigation';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		brand: PropTypes.string,
-		currentListKey: PropTypes.string,
-		currentSectionKey: PropTypes.string,
-		sections: PropTypes.array.isRequired,
-		signoutUrl: PropTypes.string,
-	};
-
-    state = {
-        barIsVisible: false,
-    };
+        this.state = {
+            barIsVisible: false,
+        };
+    }
 
     // Handle showing and hiding the menu based on the window size when
     // resizing
@@ -163,5 +157,15 @@ class MobileNavigation extends React.Component {
 		);
 	}
 }
+
+MobileNavigation.displayName = 'MobileNavigation';
+
+MobileNavigation.propTypes = {
+    brand: PropTypes.string,
+    currentListKey: PropTypes.string,
+    currentSectionKey: PropTypes.string,
+    sections: PropTypes.array.isRequired,
+    signoutUrl: PropTypes.string,
+};
 
 module.exports = MobileNavigation;

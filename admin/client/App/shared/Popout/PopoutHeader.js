@@ -8,16 +8,7 @@ import React from 'react';
 import Transition from 'react-addons-css-transition-group';
 
 class PopoutHeader extends React.Component {
-    static displayName = 'PopoutHeader';
-
-    static propTypes = {
-		leftAction: PropTypes.func,
-		leftIcon: PropTypes.string,
-		title: PropTypes.string.isRequired,
-		transitionDirection: PropTypes.oneOf(['next', 'prev']),
-	};
-
-    render() {
+	render () {
 		// If we have a left action and a left icon, render a header button
 		var headerButton = (this.props.leftAction && this.props.leftIcon) ? (
 			<button
@@ -57,5 +48,14 @@ class PopoutHeader extends React.Component {
 		);
 	}
 }
+
+PopoutHeader.displayName = 'PopoutHeader';
+
+PopoutHeader.propTypes = {
+	leftAction: PropTypes.func,
+	leftIcon: PropTypes.string,
+	title: PropTypes.string.isRequired,
+	transitionDirection: PropTypes.oneOf(['next', 'prev']),
+};
 
 module.exports = PopoutHeader;

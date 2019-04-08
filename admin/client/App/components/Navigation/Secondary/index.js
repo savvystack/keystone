@@ -14,14 +14,11 @@ import {
 import SecondaryNavItem from './NavItem';
 
 class SecondaryNavigation extends React.Component {
-    static displayName = 'SecondaryNavigation';
+	constructor(props) {
+		super(props);
 
-    static propTypes = {
-		currentListKey: PropTypes.string,
-		lists: PropTypes.array.isRequired,
-	};
-
-    state = {};
+		state = {};
+	}
 
     // Handle resizing and hide this nav on mobile (i.e. < 768px) screens
     componentDidMount() {
@@ -90,6 +87,13 @@ class SecondaryNavigation extends React.Component {
 		);
 	}
 }
+
+SecondaryNavigation.displayName = 'SecondaryNavigation';
+
+SecondaryNavigation.propTypes = {
+	currentListKey: PropTypes.string,
+	lists: PropTypes.array.isRequired,
+};
 
 module.exports = connect((state) => {
 	return {

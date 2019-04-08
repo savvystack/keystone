@@ -17,21 +17,11 @@ const SIZES = {
 };
 
 class Popout extends React.Component {
-    static displayName = 'Popout';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		isOpen: PropTypes.bool,
-		onCancel: PropTypes.func,
-		onSubmit: PropTypes.func,
-		relativeToID: PropTypes.string.isRequired,
-		width: PropTypes.number,
-	};
-
-    static defaultProps = {
-        width: 320,
-    };
-
-    state = {};
+        this.state = {};
+    }
 
     componentWillReceiveProps(nextProps) {
 		if (!this.props.isOpen && nextProps.isOpen) {
@@ -127,6 +117,20 @@ class Popout extends React.Component {
 		);
 	}
 }
+
+Popout.displayName = 'Popout';
+
+Popout.propTypes = {
+    isOpen: PropTypes.bool,
+    onCancel: PropTypes.func,
+    onSubmit: PropTypes.func,
+    relativeToID: PropTypes.string.isRequired,
+    width: PropTypes.number,
+};
+
+Popout.defaultProps = {
+    width: 320,
+};
 
 module.exports = Popout;
 

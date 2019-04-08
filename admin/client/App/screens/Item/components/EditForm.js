@@ -53,20 +53,17 @@ function smoothScrollTop () {
 }
 
 class EditForm extends React.Component {
-    static displayName = 'EditForm';
+	constructor(props) {
+		super(props);
 
-    static propTypes = {
-		data: PropTypes.object,
-		list: PropTypes.object,
-	};
-
-    state = {
-        values: assign({}, this.props.data.fields),
-        confirmationDialog: null,
-        loading: false,
-        lastValues: null, // used for resetting
-        focusFirstField: !this.props.list.nameField && !this.props.list.nameFieldIsFormHeader,
-    };
+		this.state = {
+	        values: assign({}, this.props.data.fields),
+	        confirmationDialog: null,
+	        loading: false,
+	        lastValues: null, // used for resetting
+	        focusFirstField: !this.props.list.nameField && !this.props.list.nameFieldIsFormHeader,
+	    };
+	}
 
     componentDidMount() {
 		this.__isMounted = true;
@@ -455,6 +452,13 @@ const styles = {
 	deleteButton: {
 		float: 'right',
 	},
+};
+
+EditForm.displayName = 'EditForm';
+
+EditForm.propTypes = {
+	data: PropTypes.object,
+	list: PropTypes.object,
 };
 
 module.exports = EditForm;

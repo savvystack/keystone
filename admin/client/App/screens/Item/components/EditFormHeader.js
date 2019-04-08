@@ -12,17 +12,13 @@ import Drilldown from './Drilldown';
 import { GlyphButton, ResponsiveText } from '../../../elemental';
 
 export class EditFormHeader extends React.Component {
-    static displayName = 'EditFormHeader';
+    constructor(props) {
+        super(props);
 
-    static propTypes = {
-		data: PropTypes.object,
-		list: PropTypes.object,
-		toggleCreate: PropTypes.func,
-	};
-
-    state = {
-        searchString: '',
-    };
+        this.state = {
+            searchString: '',
+        };
+    }
 
     toggleCreate = (visible) => {
 		this.props.toggleCreate(visible);
@@ -166,6 +162,14 @@ export class EditFormHeader extends React.Component {
 		);
 	}
 }
+
+EditFormHeader.displayName = 'EditFormHeader';
+
+EditFormHeader.propTypes = {
+    data: PropTypes.object,
+    list: PropTypes.object,
+    toggleCreate: PropTypes.func,
+};
 
 export default connect((state) => ({
 	listActivePage: state.lists.page.index,

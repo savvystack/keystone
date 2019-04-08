@@ -14,8 +14,8 @@ TODO: Implement yearRange Prop, or deprecate for max / min values (better)
 */
 
 const DEFAULT_INPUT_FORMAT = 'YYYY-MM-DD';
-// Savvy Stack: make date format consistent 
-const DEFAULT_FORMAT_STRING = 'YYYY-MM-DD';//'Do MMM YYYY';
+// Savvy Stack: make date format consistent
+const DEFAULT_FORMAT_STRING = 'YYYY-MM-DD';// 'Do MMM YYYY';
 
 module.exports = Field.create({
 	displayName: 'DateField',

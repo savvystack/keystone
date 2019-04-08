@@ -34,7 +34,7 @@ module.exports = function (req, res, next) {
 	var sort = req.list.expandSort(req.query.sort);
 	query.sort(sort.string);
 	// Savvy Stack: Add request states into query object, so that pre/post:find hooks can modify the query based on particular request
-    query = keystone.get('set request states')(query, req);
+	query = keystone.get('set request states')(query, req);
 	query.exec()
 	.then(function (results) {
 		var data;

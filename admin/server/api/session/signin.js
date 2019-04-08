@@ -35,7 +35,7 @@ function signin (req, res) {
 								if (err) return res.status(500).json({ error: 'post:signin error', detail: err });
 								res.json({ success: true, user: user });
 							});
-						});	
+						});
 					} else if (err) {
 						return res.status(500).json({ error: 'bcrypt error', detail: err });
 					} else {
