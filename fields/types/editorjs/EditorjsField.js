@@ -25,24 +25,15 @@ module.exports = Field.create({
 	getInitialState () {
 		return {
 			id: getId(),
-			isFocused: false,
             wysiwygActive: false,
 		};
 	},
 
 	initWysiwyg () {
-        var self = this;
-
 		this._currentValue = this.props.value;
 		this.editor = new EditorJs({
             holderId: this.state.id,
             data: this.props.value,
-            onReady: function() {
-                var editor = self.editor;
-                var editorElem = document.getElementById(editor.configuration.holderId);
-                editorElem.addEventListener('focus', self.focusChanged.bind(self, true));
-                editorElem.addEventListener('blur', self.focusChanged.bind(self, false));
-            },
             onChange: this.valueChanged,
         });
 
@@ -96,7 +87,6 @@ module.exports = Field.create({
 	},
 
 	renderField () {
-		var className = this.state.isFocused ? 'is-focused' : '';
 		var style = {
 			height: this.props.height,
 		};
@@ -104,7 +94,6 @@ module.exports = Field.create({
 			<div
                 id={this.state.id}
                 style={style}
-                className={className}
             >
             </div>
 		);
