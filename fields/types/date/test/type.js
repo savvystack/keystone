@@ -324,8 +324,8 @@ exports.testFieldType = function (List) {
 		it('should format the date value using moment', function () {
 			var testItem = new List.model();
 			testItem.date = new Date(2013, 11, 4);
-			demand(testItem._.date.format()).equal('4th Dec 2013');
-			demand(testItem._.date.format('YYYYMMDD')).equal('20131204');
+			demand(testItem._.date.format()).equal('2013-12-04');
+			demand(testItem._.date.format('Do MMM YYYY')).equal('4th Dec 2013');
 		});
 
 		it('should return a moment object set to the field value', function () {
